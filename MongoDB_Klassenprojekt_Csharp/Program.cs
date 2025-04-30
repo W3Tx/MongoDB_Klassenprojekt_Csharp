@@ -1,9 +1,5 @@
-﻿using MongoDB;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Conventions;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Linq;
 
 internal class Program 
 {
@@ -18,12 +14,59 @@ internal class Program
         client = new MongoClient("mongodb://localhost:27017");
         Console.WriteLine("Verbunden mit MongoDB-Server");
 
-        ListDatabases();
-        SelectOrCreateDatabase();
-        ListCollections();
-        SelectOrCreateCollection();
-        InsertDocument();
-        DisplayDocument();
+        bool running = true;
+
+        while (running)
+        {
+            Console.Clear();
+            Console.WriteLine("===== MongoDB Menü =====");
+            Console.WriteLine("[1] Datenbanken anzeigen");
+            Console.WriteLine("[2] Datenbank auswählen oder erstellen");
+            Console.WriteLine("[3] Collections anzeigen");
+            Console.WriteLine("[4] Collection auswählen oder erstellen");
+            Console.WriteLine("[5] Dokumente einfügen");
+            Console.WriteLine("[6] Dokumente anzeigen");
+            Console.WriteLine("[7] Einzelnes Dokument löschen");
+            Console.WriteLine("[0] Beenden");
+
+            Console.Write("\nAuswahl: ");
+
+            var input = Console.ReadLine().Trim();
+
+            switch (input)
+            {
+                case "1":
+                    ListDatabases();
+                    break;
+                case "2":
+                    SelectOrCreateDatabase();
+                    break;
+                case "3":
+                    ListCollections();
+                    break;
+                case "4":
+                    SelectOrCreateCollection();
+                    break;
+                case "5":
+                    InsertDocument();
+                    break;
+                case "6":
+                    DisplayDocument();
+                    break;
+                case "7":
+                    DeleteSingleDocument();
+                    break;
+                case "0":
+                    running = false;
+                    Console.WriteLine("Programm wird beendet...");
+                    break;
+            }
+            if (running)
+            {
+                Console.WriteLine("\nDrücken Sie eine Taste, um fortzufahren...");
+                Console.ReadKey();
+            }
+        }
 
         // -----------------------------------------------
     }
